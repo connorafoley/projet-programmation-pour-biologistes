@@ -1,0 +1,13 @@
+export TERM=xterm-color
+export CLICOLOR=true
+export LSCOLORS=cxfxcxdxDxegedabagacad
+
+export PATH=$PATH:$HOME/local/bin
+
+HISTSIZE=50000
+HISTTIMEFORMAT="%Y-%m-%d "
+
+# set -o noclobber
+
+alias	cl='clear'
+alias   cx='chmod u+x'
