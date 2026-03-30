@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+#SBATCH --job-name=first-slurm
+#SBATCH --partition=comp01
+#SBATCH --nodes=1
+#SBATCH --qos=qos1
+#SBATCH --cpus-per-task=32
+#SBATCH --time=0-00:00:01
+#SBATCH --output=%x.%j.out
+#SBATCH --error=%x.%j.err
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=caf030@uark.edu
