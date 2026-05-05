@@ -1,0 +1,2 @@
+module load blast
+blastn -query watermelon.fsa -subject watermelon.fsa > wat.vs.wat.blastn

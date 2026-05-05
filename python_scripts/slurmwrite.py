@@ -7,7 +7,13 @@ TIME_RE = re.compile(
     r"^(?:\d+|\d{1,6}:\d{2}|\d{1,6}:\d{2}:\d{2}|\d+-\d{1,2}(?::\d{2}(?::\d{2})?)?)$"
 )
 
-def writeslurm(name,qos,chronos,email,cpus=32,mail_type='ALL',nodes=1):
+def cmds(commands):
+    clines = []
+    with open(commands, 'r') as file:
+        clines = file.readlines()
+    return clines
+
+def writeslurm(name,qos,chronos,email,cpus=32,mail_type='ALL',nodes=1,commands = None):
     if not TIME_RE.fullmatch(str(chronos).strip()):
         raise ValueError(
             "Invalid time format. Use MM, MM:SS, HH:MM:SS, D-HH, D-HH:MM, or D-HH:MM:SS."
@@ -31,8 +37,8 @@ def writeslurm(name,qos,chronos,email,cpus=32,mail_type='ALL',nodes=1):
         f"#SBATCH --mail-type={mail_type}\n",
         f"#SBATCH --mail-user={email}\n",
     ]
-
-    #def commands():
+    if commands:
+        lines.extend(cmds(commands))
 
     fname = f"{name}.slurm"
     with open(fname, "w", encoding="utf-8") as file:
@@ -46,7 +52,8 @@ if __name__ == "__main__":
             name = input("Job Name: "),
             qos = input("Queue Name: "),
             chronos = input("Run time. Use MM, MM:SS, HH:MM:SS, D-HH, D-HH:MM, or D-HH:MM:SS. "),
-            email = input("email: ")
+            email = input("email: "),
+            commands = input("File containing list of commands: ")
         )
     elif man == 1:
         writeslurm(
@@ -56,7 +63,9 @@ if __name__ == "__main__":
             email = input("email: "),
             mail_type = input("Emailtype: "),
             cpus = input("Num cpus to use per task: "),
-            nodes = input("number of nodes: ")
+            nodes = input("number of nodes: "),
+            commands = input("File containing list of commands: ")
+            
         )
     else:
         print("You didn't answer 0 or 1!")
